@@ -9,7 +9,7 @@ First start with building classes and interfaces (1). Then fill out implementati
 # (1) constructing classes (purpose statements, data schema) and and interfaces (2-3 hrs). 9/29 12pm-3pm. 
 
 IPlayer - a bot/human/actor that initiates trades and moves. 
-+ pieces: int[] # colors are listed in pieces array in a determined order. 
++ piecesBag
 + int score
 + function strategy
 + int turn
@@ -19,16 +19,19 @@ IPlayer - a bot/human/actor that initiates trades and moves.
 + implemented by HousePlayer, ClientPlayer
 
 Card - In exchange for pebbles, awards Players points. 
-+ pieces: int[] # colors are listed in pieces array in a determined order. 
++ piecesBag
 + boolean star
 
 Bank - manages and limits Players' requests to trade.
-+ pieces: int[] # colors are listed in pieces array in a determined order. 
++ piecesBag
 + pebbleExchange(Equation, Player, List<Piece>)
 
+PiecesBag - stores color of pebbles with corresponding number of pebbles for that color
++ HashMap<String, Integer> pieces
+
 Equations - exchange rate for trading pieces.
-+ List<Piece> left
-+ List<Piece> right
++ PiecesBag left
++ PiecesBag right
 
 Referee - essential component; cancels players that cheat or timeout; also reports the scoreboard and sets up the map and game pieces; Also informs observers of in game actions. At start of game, displays 10 random equations.
 + List<Card> total

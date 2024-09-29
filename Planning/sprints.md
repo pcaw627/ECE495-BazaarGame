@@ -28,6 +28,7 @@ Bank - manages and limits Players' requests to trade.
 
 PiecesBag - stores color of pebbles with corresponding number of pebbles for that color
 + HashMap<String, Integer> pieces
++ generateRandom(int numOfPieces) #method to generate a random PiecesBag given an input of how many pieces should be in the bag
 
 Equations - exchange rate for trading pieces.
 + PiecesBag left

@@ -26,6 +26,20 @@ public class PiecesBag {
         }
     }
 
+    public static PiecesBag random(int size) {
+        String[] colors = {"red", "blue", "yellow", "green", "white"};
+        // raise exc if size > 4
+        List<String> piecesList = new ArrayList<>();
+
+        for (int i=0; i<size; i++) {
+            Random rand = new Random();
+            piecesList.add(Arrays.asList(colors).get(rand.nextInt(colors.length)));
+        }
+
+        String[] inputArray = piecesList.toArray(new String[piecesList.size()]);
+        return new PiecesBag(inputArray);
+    }
+
     // returns if PiecesBag b is a subset of this PiecesBag (a). 
     public boolean canPurchase(PiecesBag b) {
         for (Map.Entry<String, Integer> entry : b.pieces.entrySet()) {

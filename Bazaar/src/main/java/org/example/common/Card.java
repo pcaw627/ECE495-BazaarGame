@@ -1,9 +1,12 @@
 package org.example.common;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Card {
-    // pie
+    PiecesBag pieces;
+    boolean hasStar;
+
+    public Card(String[] inputPieces, boolean hasStar) {
+        pieces = new PiecesBag(inputPieces);
+        this.hasStar = hasStar;
+    }
     
 }

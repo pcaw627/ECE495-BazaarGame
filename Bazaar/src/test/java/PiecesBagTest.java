@@ -5,6 +5,8 @@ import org.example.common.PiecesBag;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PiecesBagTest {
@@ -143,5 +145,15 @@ public class PiecesBagTest {
         PiecesBag d = new PiecesBag(input2);
         a.removePieces(c);
         assertTrue(a.equals(d));
+    }
+
+    @Test
+    public void testRandom(){
+        PiecesBag c = PiecesBag.random(15);
+        int totalSize = 0;
+        for(Map.Entry<String, Integer> entry : c.pieces.entrySet()){
+            totalSize += entry.getValue();
+        }
+        assertEquals(totalSize, 15);
     }
 }

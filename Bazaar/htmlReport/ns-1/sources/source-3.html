@@ -1,0 +1,267 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > PiecesBag</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">org.example</a>
+</div>
+
+<h1>Coverage Summary for Class: PiecesBag (org.example)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PiecesBag</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    97.2%
+  </span>
+  <span class="absValue">
+    (35/36)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (52/52)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package org.example;
+&nbsp;
+&nbsp;import java.util.*;
+&nbsp;
+&nbsp;public class PiecesBag {
+&nbsp;    // Maps the color of each pebble with the count for that color. 
+<b class="fc">&nbsp;    public Map&lt;String, Integer&gt; pieces = new HashMap&lt;&gt;();</b>
+<b class="fc">&nbsp;    public String[] colors = {&quot;red&quot;, &quot;blue&quot;, &quot;yellow&quot;, &quot;green&quot;, &quot;white&quot;};</b>
+&nbsp;
+<b class="fc">&nbsp;    public PiecesBag(String[] inputpieces) {</b>
+<b class="fc">&nbsp;        for (String piece : inputpieces){</b>
+<b class="fc">&nbsp;            if(!Arrays.asList(colors).contains(piece)){</b>
+&nbsp;                try {
+<b class="fc">&nbsp;                    throw new IllegalArgumentException(&quot;Invalid piece: &quot; + piece);</b>
+<b class="fc">&nbsp;                }catch(IllegalArgumentException e){</b>
+<b class="fc">&nbsp;                    System.out.println(e);</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        for (String piece : inputpieces) {</b>
+<b class="fc">&nbsp;            if (pieces.containsKey(piece)) {</b>
+<b class="fc">&nbsp;                pieces.put(piece, pieces.get(piece) + 1);</b>
+&nbsp;            } else {
+<b class="fc">&nbsp;                pieces.put(piece, 1);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    // returns if PiecesBag b is a subset of this PiecesBag (a). 
+&nbsp;    public boolean canPurchase(PiecesBag b) {
+<b class="fc">&nbsp;        for (Map.Entry&lt;String, Integer&gt; entry : b.pieces.entrySet()) {</b>
+<b class="fc">&nbsp;            if (this.pieces.containsKey(entry.getKey())) {</b>
+&nbsp;                // check num
+&nbsp;                // if A&#39;s mapping for key maps to a greater value than B&#39;s mapping for that key
+<b class="fc">&nbsp;                if (this.pieces.get(entry.getKey()) &lt; b.pieces.get(entry.getKey())) {</b>
+<b class="fc">&nbsp;                    return false;</b>
+&nbsp;                }
+&nbsp;            } else {
+&nbsp;                // return false if b contains a key that a does not.
+<b class="fc">&nbsp;                return false;</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // modifies this PiecesBag in-place, adding a single Piece.
+&nbsp;    public void addPiece(String b) {
+<b class="fc">&nbsp;        if(Arrays.asList(this.colors).contains(b)) {</b>
+<b class="fc">&nbsp;            this.pieces.putIfAbsent(b, 0);</b>
+<b class="fc">&nbsp;            this.pieces.put(b, this.pieces.get(b) + 1);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    // modifies this PiecesBag in-place, removing a single Piece. 
+&nbsp;    // if b cannot be removed from a, a will remain unchanged. 
+&nbsp;    public void removePiece(String b) {
+&nbsp;        try {
+<b class="fc">&nbsp;            if (!this.pieces.containsKey(b)) {</b>
+<b class="fc">&nbsp;                throw new Exception(&quot;No pieces present to remove: check with canPurchase() first. &quot;);</b>
+&nbsp;            } else {
+<b class="fc">&nbsp;                this.pieces.put(b, this.pieces.get(b)-1);</b>
+<b class="fc">&nbsp;                if(this.pieces.get(b) == 0) {</b>
+<b class="fc">&nbsp;                    this.pieces.remove(b);</b>
+&nbsp;                }
+&nbsp;            }
+<b class="fc">&nbsp;        } catch (Exception e) {</b>
+<b class="fc">&nbsp;            System.out.println(e);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    // modifies this PiecesBag in-place, adding all Pieces in PieceBag b to this PieceBag.
+&nbsp;    public void addPieces(PiecesBag b) {
+<b class="fc">&nbsp;        for (Map.Entry&lt;String, Integer&gt; entry : b.pieces.entrySet()) {</b>
+<b class="fc">&nbsp;                this.pieces.putIfAbsent(entry.getKey(), 0);</b>
+<b class="fc">&nbsp;                int bPieces = b.pieces.get(entry.getKey());</b>
+<b class="fc">&nbsp;                this.pieces.put(entry.getKey(), this.pieces.get(entry.getKey()) + bPieces);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    // modifies this PiecesBag in-place, removing all Pieces in PieceBag b from this PieceBag.
+&nbsp;    public void removePieces(PiecesBag b) {
+<b class="fc">&nbsp;        for (Map.Entry&lt;String, Integer&gt; entry : b.pieces.entrySet()) {</b>
+&nbsp;            try {
+<b class="fc">&nbsp;                if (!this.pieces.containsKey(entry.getKey())) {</b>
+<b class="fc">&nbsp;                    throw new Exception(&quot;B&#39;s bag contains a piece not present in A: check with canPurchase() first. &quot;);</b>
+<b class="fc">&nbsp;                } else if (this.pieces.get(entry.getKey()) &lt; b.pieces.get(entry.getKey())){</b>
+<b class="fc">&nbsp;                    throw new Exception(&quot;B contains too many pieces to be removed from A: check with canPurchase() first. &quot;);</b>
+&nbsp;                } else {
+<b class="fc">&nbsp;                    int remainingPieces = this.pieces.get(entry.getKey()) - b.pieces.get(entry.getKey());</b>
+<b class="fc">&nbsp;                    this.pieces.put(entry.getKey(), remainingPieces);</b>
+<b class="pc">&nbsp;                    if(remainingPieces == 0) {</b>
+<b class="fc">&nbsp;                        this.pieces.remove(entry.getKey());</b>
+&nbsp;                    }
+&nbsp;                }
+<b class="fc">&nbsp;            } catch (Exception e) {</b>
+<b class="fc">&nbsp;                System.out.println(e);</b>
+&nbsp;            }
+&nbsp;           
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public String toString() {
+<b class="fc">&nbsp;        return this.pieces.toString();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean equals(PiecesBag b){
+<b class="fc">&nbsp;        for (Map.Entry&lt;String, Integer&gt; entry : b.pieces.entrySet()) {</b>
+<b class="fc">&nbsp;            if(!this.pieces.containsKey(entry.getKey())){</b>
+<b class="fc">&nbsp;                return false;</b>
+&nbsp;            }
+<b class="fc">&nbsp;            int aValue = this.pieces.get(entry.getKey());</b>
+<b class="fc">&nbsp;            int bValue = entry.getValue();</b>
+<b class="fc">&nbsp;            if(aValue != bValue){</b>
+<b class="fc">&nbsp;                return false;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /*public static void main(String[] args) {
+&nbsp;        String[] input1 = {&quot;red&quot;, &quot;red&quot;, &quot;blue&quot;, &quot;green&quot;};
+&nbsp;        String[] input2 = {&quot;red&quot;, &quot;red&quot;, &quot;yellow&quot;, &quot;blue&quot;, &quot;green&quot;};
+&nbsp;
+&nbsp;        PiecesBag a = new PiecesBag(input1);
+&nbsp;        PiecesBag b = new PiecesBag(input2);
+&nbsp;
+&nbsp;        System.out.println(a.toString());
+&nbsp;        System.out.println(b.toString());
+&nbsp;
+&nbsp;        System.out.println(a.canPurchase(b));
+&nbsp;        System.out.println(b.canPurchase(a));
+&nbsp;        a.addPiece (&quot;yellow&quot;);
+&nbsp;        System.out.println(a.equals(b));
+&nbsp;
+&nbsp;        a.removePiece(&quot;black&quot;);
+&nbsp;        a.removePiece(&quot;red&quot;);
+&nbsp;        System.out.println(a.toString());
+&nbsp;        String[] temp_in = {&quot;red&quot;, &quot;blue&quot;};
+&nbsp;        String[] temp_in2 = {&quot;red&quot;, &quot;red&quot;};
+&nbsp;        PiecesBag temp = new PiecesBag(temp_in);
+&nbsp;        PiecesBag temp2 = new PiecesBag(temp_in2);
+&nbsp;        a.removePieces(temp);
+&nbsp;        System.out.println(a.toString());
+&nbsp;        // a.removePiece(&quot;red&quot;);
+&nbsp;        a.addPieces(temp2);
+&nbsp;        System.out.println(a.toString());
+&nbsp;
+&nbsp;    }*/
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-09-29 15:37</div>
+</div>
+</body>
+</html>

@@ -1,12 +1,22 @@
-import java.util.HashMap;
-import java.util.Map;
+package org.example;
+
+import java.util.*;
 
 public class PiecesBag {
     // Maps the color of each pebble with the count for that color. 
-    Map<String, Integer> pieces = new HashMap<>(); 
-
+    public Map<String, Integer> pieces = new HashMap<>();
+    public String[] colors = {"red", "blue", "yellow", "green", "white"};
 
     public PiecesBag(String[] inputpieces) {
+        for (String piece : inputpieces){
+            if(!Arrays.asList(colors).contains(piece)){
+                try {
+                    throw new IllegalArgumentException("Invalid piece: " + piece);
+                }catch(IllegalArgumentException e){
+                    System.out.println(e);
+                }
+            }
+        }
         for (String piece : inputpieces) {
             if (pieces.containsKey(piece)) {
                 pieces.put(piece, pieces.get(piece) + 1);
@@ -36,18 +46,23 @@ public class PiecesBag {
 
     // modifies this PiecesBag in-place, adding a single Piece.
     public void addPiece(String b) {
-        this.pieces.putIfAbsent(b, 0);
-        this.pieces.put(b, this.pieces.get(b)+1);
+        if(Arrays.asList(this.colors).contains(b)) {
+            this.pieces.putIfAbsent(b, 0);
+            this.pieces.put(b, this.pieces.get(b) + 1);
+        }
     }
 
     // modifies this PiecesBag in-place, removing a single Piece. 
     // if b cannot be removed from a, a will remain unchanged. 
     public void removePiece(String b) {
         try {
-            if (!this.pieces.containsKey(b) || this.pieces.get(b) == 0) {
+            if (!this.pieces.containsKey(b)) {
                 throw new Exception("No pieces present to remove: check with canPurchase() first. ");
             } else {
                 this.pieces.put(b, this.pieces.get(b)-1);
+                if(this.pieces.get(b) == 0) {
+                    this.pieces.remove(b);
+                }
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -57,9 +72,9 @@ public class PiecesBag {
     // modifies this PiecesBag in-place, adding all Pieces in PieceBag b to this PieceBag.
     public void addPieces(PiecesBag b) {
         for (Map.Entry<String, Integer> entry : b.pieces.entrySet()) {
-            this.pieces.putIfAbsent(entry.getKey(), 0);
-            int bPieces = b.pieces.get(entry.getKey());
-            this.pieces.put(entry.getKey(), this.pieces.get(entry.getKey())+bPieces);   
+                this.pieces.putIfAbsent(entry.getKey(), 0);
+                int bPieces = b.pieces.get(entry.getKey());
+                this.pieces.put(entry.getKey(), this.pieces.get(entry.getKey()) + bPieces);
         }
     }
 
@@ -74,6 +89,9 @@ public class PiecesBag {
                 } else {
                     int remainingPieces = this.pieces.get(entry.getKey()) - b.pieces.get(entry.getKey());
                     this.pieces.put(entry.getKey(), remainingPieces);
+                    if(remainingPieces == 0) {
+                        this.pieces.remove(entry.getKey());
+                    }
                 }
             } catch (Exception e) {
                 System.out.println(e);
@@ -86,7 +104,21 @@ public class PiecesBag {
         return this.pieces.toString();
     }
 
-    public static void main(String[] args) {
+    public boolean equals(PiecesBag b){
+        for (Map.Entry<String, Integer> entry : b.pieces.entrySet()) {
+            if(!this.pieces.containsKey(entry.getKey())){
+                return false;
+            }
+            int aValue = this.pieces.get(entry.getKey());
+            int bValue = entry.getValue();
+            if(aValue != bValue){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /*public static void main(String[] args) {
         String[] input1 = {"red", "red", "blue", "green"};
         String[] input2 = {"red", "red", "yellow", "blue", "green"};
 
@@ -98,6 +130,8 @@ public class PiecesBag {
 
         System.out.println(a.canPurchase(b));
         System.out.println(b.canPurchase(a));
+        a.addPiece ("yellow");
+        System.out.println(a.equals(b));
 
         a.removePiece("black");
         a.removePiece("red");
@@ -112,6 +146,6 @@ public class PiecesBag {
         a.addPieces(temp2);
         System.out.println(a.toString());
 
-    }
+    }*/
 
 }

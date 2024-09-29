@@ -2,11 +2,12 @@ package org.example;
 
 import org.example.common.PiecesBag;
 
-public class IPlayer {
+public class Bank {
+    
     PiecesBag pieces;
 
-    public IPlayer() {
-
+    public Bank() {
+        
     }
-    
+
 }

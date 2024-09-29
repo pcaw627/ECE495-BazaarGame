@@ -40,6 +40,14 @@ public class PiecesBag {
         return new PiecesBag(inputArray);
     }
 
+    public int size() {
+        int size = 0;
+        for (int count : pieces.values()) {
+            size += count;
+        }
+        return size;
+    }
+
     // returns if PiecesBag b is a subset of this PiecesBag (a). 
     public boolean canPurchase(PiecesBag b) {
         for (Map.Entry<String, Integer> entry : b.pieces.entrySet()) {

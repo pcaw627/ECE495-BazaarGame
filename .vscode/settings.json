@@ -1,0 +1,6 @@
+{
+    "java.project.sourcePaths": [
+        "src",
+        "Bazaar/src/main/java/org/example"
+    ]
+}

@@ -1,4 +1,7 @@
-import org.example.PiecesBag;
+
+
+
+import org.example.common.PiecesBag;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
